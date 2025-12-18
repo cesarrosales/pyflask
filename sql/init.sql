@@ -1,0 +1,20 @@
+CREATE TABLE IF NOT EXISTS bands (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(200) NOT NULL UNIQUE
+);
+
+CREATE TABLE IF NOT EXISTS albums (
+    id SERIAL PRIMARY KEY,
+    band_id INTEGER NOT NULL REFERENCES bands(id) ON DELETE CASCADE,
+    title VARCHAR(200) NOT NULL,
+    release_year INTEGER,
+    UNIQUE (band_id, title)
+);
+
+CREATE TABLE IF NOT EXISTS songs (
+    id SERIAL PRIMARY KEY,
+    album_id INTEGER NOT NULL REFERENCES albums(id) ON DELETE CASCADE,
+    title VARCHAR(200) NOT NULL,
+    lyrics TEXT,
+    UNIQUE (album_id, title)
+);
