@@ -2,16 +2,15 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Flask (app.wsgi)",
+      "name": "Flask (lcl)",
       "type": "debugpy",
       "request": "launch",
       "module": "flask",
+      "envFile": "${workspaceFolder}/.env.lcl",
       "env": {
-        "FLASK_APP": "app.wsgi",
-        "FLASK_ENV": "development",
-        "FLASK_DEBUG": "1"
+        "FLASK_APP": "app.wsgi:app"
       },
-      "args": ["run", "--no-debugger", "--no-reload"],
+      "args": ["run", "--no-reload"],
       "jinja": true
     }
   ]
