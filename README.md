@@ -3,12 +3,18 @@ Minimal Flask API project using a clean, layered architecture (routes, services,
 
 ## Setup
 
-### Create virtual environment
+### Set up environment
 ```sh
 python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 
+```
+
+### Flask Commands
+```sh
+# list routes
+flask --app app.wsgi routes
 ```
 
 ### Notes
