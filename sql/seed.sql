@@ -62,23 +62,3 @@ I Hearken the end$$),
 ON CONFLICT (album_id, title) DO NOTHING;
 
 COMMIT;
-
--- ============================
--- Verification
--- ============================
-
--- List all songs for the album
-SELECT
-    b.name   AS band,
-    a.title  AS album,
-    s.title  AS song,
-    CASE
-        WHEN s.lyrics = 'Not available' THEN 'NO LYRICS'
-        ELSE 'HAS LYRICS'
-    END AS lyrics_status
-FROM bands b
-JOIN albums a ON a.band_id = b.id
-JOIN songs s ON s.album_id = a.id
-WHERE b.name = 'Hulder'
-  AND a.title = 'Verses In Oath'
-ORDER BY s.id;
