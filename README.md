@@ -11,6 +11,7 @@ pip install -r requirements.txt
 
 ```
 
+### Run locally with Docker
 ```sh
 # running on 5001 for docker
 docker build -t pyflask .  
