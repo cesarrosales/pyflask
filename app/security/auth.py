@@ -1,5 +1,6 @@
 from functools import wraps
 from flask import request, jsonify
+import jwt
 
 from app.security.auth0_auth import verify_auth0_token
 
@@ -19,8 +20,9 @@ def require_auth(fn):
         try:
             decoded = verify_auth0_token(token)
             request.user = {"provider": "auth0", "sub": decoded.get("sub"), "claims": decoded}
-            return fn(*args, **kwargs)
-        except Exception:
+        except jwt.PyJWTError:
             return jsonify({"error": "Unauthorized"}), 401
+
+        return fn(*args, **kwargs)
 
     return wrapper
