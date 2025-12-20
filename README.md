@@ -11,14 +11,8 @@ pip install -r requirements.txt
 
 ```
 
-### Flask Commands
-```sh
-# list routes
-flask --app app.wsgi routes
-```
-
 ### Run with Docker
-```ssh
+```sh
 # running on 5001 for docker
 docker build -t pyflask .  
 pyflask % docker run --rm -p 5001:5000 --env-file .env.docker.lcl pyflask
@@ -26,4 +20,5 @@ pyflask % docker run --rm -p 5001:5000 --env-file .env.docker.lcl pyflask
 
 ### Notes
 
-- If using VS Code, select the `.venv` interpreter  
+- Endpoints use Auth0 provider
+- If using VS Code, select the `.venv` interpreter 
