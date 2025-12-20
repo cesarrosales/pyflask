@@ -18,7 +18,7 @@ docker build -t pyflask .
 pyflask % docker run --rm -p 5001:5000 --env-file .env.docker.lcl pyflask
 ```
 
-### Run in AWS Lambda environment with Docker
+### Deploy to AWS Lambda from Local (or use GitHub Action)
 ```sh
 # Build + push Lambda-compatible image to ECR (required: buildx)
 export AWS_REGION=us-west-2
