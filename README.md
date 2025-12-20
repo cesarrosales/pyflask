@@ -1,5 +1,5 @@
 # pyflask
-Minimal Flask API project using a clean, layered architecture (routes, services, repositories, models).
+Minimal Flask API project deployable to AWS Lambda as a container image, using a clean, layered architecture (routes, services, repositories, models).
 
 ## Setup
 
