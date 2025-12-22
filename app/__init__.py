@@ -28,9 +28,11 @@ def create_app():
         except ImportError:
             OperationalError = None
         if OperationalError is not None and isinstance(err, OperationalError):
+            orig = getattr(err, "orig", None)
             logger.error(
-                "Database connection failed: %s",
-                getattr(err, "orig", err),
+                "Database connection failed: orig=%r args=%r",
+                orig,
+                getattr(orig, "args", None),
             )
         logger.exception("Unhandled exception", exc_info=err)
         return jsonify({"error": "Internal server error"}), 500
