@@ -10,6 +10,8 @@ def create_app():
     logger = logging.getLogger(__name__)
     if not os.getenv("DATABASE_URL"):
         logger.warning("DATABASE_URL is not configured; database connections are disabled.")
+    else:
+        logger.info("DATABASE_URL is configured.")
 
     blueprints = [
         health_bp,
