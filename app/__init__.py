@@ -12,6 +12,31 @@ def create_app():
         logger.warning("DATABASE_URL is not configured; database connections are disabled.")
     else:
         logger.info("DATABASE_URL is configured.")
+        try:
+            from sqlalchemy import text
+            from app.db.session import engine
+        except Exception:  # pragma: no cover - best-effort diagnostics
+            engine = None
+        if engine is None:
+            logger.warning("Database engine is not initialized; skipping identity diagnostics.")
+        else:
+            try:
+                with engine.connect() as conn:
+                    row = conn.execute(
+                        text(
+                            "select current_user, current_database(), "
+                            "current_schema, current_setting('search_path')"
+                        )
+                    ).one()
+                logger.info(
+                    "DB identity: user=%s db=%s schema=%s search_path=%s",
+                    row[0],
+                    row[1],
+                    row[2],
+                    row[3],
+                )
+            except Exception as err:  # pragma: no cover - best-effort diagnostics
+                logger.error("DB identity check failed: %r", err)
 
     blueprints = [
         health_bp,
