@@ -48,6 +48,11 @@ aws lambda update-function-configuration \
   --environment "Variables={AWS_LWA_ASYNC_INIT=true,AWS_LWA_PORT=8080,AWS_LWA_READINESS_CHECK_PATH=/health,AWS_LWA_INVOKE_MODE=response_stream}"
 ```
 
+### Monitor AWS Lambda logs
+```sh
+aws logs tail /aws/lambda/pyflask --follow
+```
+
 ### Notes
 
 - Endpoints use Auth0 provider
