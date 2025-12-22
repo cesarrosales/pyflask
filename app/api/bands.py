@@ -1,17 +1,29 @@
+import json
+import logging
+
 from flask import Blueprint, jsonify
-from app.db.deps import get_db
-from app.services.band_service import BandService
+from sqlalchemy import text
+
+from app.db.session import engine
+from app.utils.serialize import serialize_rows
 from app.security.auth import require_auth
 from app.security.permissions import require_permission
 
 
 bands_bp = Blueprint("bands", __name__, url_prefix="/bands")
-service = BandService()
+log = logging.getLogger(__name__)
 
 @bands_bp.get("/")
 @require_auth
 @require_permission("read:all")
 def list_bands():
-    with get_db() as db:
-        output = service.list_bands(db)
-    return jsonify(output)
+    with engine.connect() as conn:
+        rows = conn.execute(text("select * from public.bands")).fetchall()
+    data = serialize_rows(rows)
+    payload = json.dumps(data, default=str)
+    log.info(
+        "Returning JSON bytes=%d preview=%s",
+        len(payload.encode("utf-8")),
+        payload[:200],
+    )
+    return jsonify(data), 200
