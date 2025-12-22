@@ -23,6 +23,15 @@ def create_app():
 
     @app.errorhandler(Exception)
     def handle_unexpected_error(err):
+        try:
+            from sqlalchemy.exc import OperationalError
+        except ImportError:
+            OperationalError = None
+        if OperationalError is not None and isinstance(err, OperationalError):
+            logger.error(
+                "Database connection failed: %s",
+                getattr(err, "orig", err),
+            )
         logger.exception("Unhandled exception", exc_info=err)
         return jsonify({"error": "Internal server error"}), 500
 
