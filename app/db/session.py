@@ -11,7 +11,12 @@ engine = None
 SessionLocal = None
 
 if DATABASE_URL:
-    engine = create_engine(DATABASE_URL, future=True, poolclass=NullPool)
+    engine = create_engine(
+        DATABASE_URL,
+        future=True,
+        poolclass=NullPool,
+        connect_args={"options": "-c search_path=public"},
+    )
     SessionLocal = sessionmaker(
         bind=engine,
         autoflush=False,
