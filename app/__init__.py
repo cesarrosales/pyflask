@@ -1,6 +1,6 @@
 import logging
 import os
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from app.api.health import health_bp
 from app.api.bands import bands_bp
 
@@ -61,5 +61,20 @@ def create_app():
             )
         logger.exception("Unhandled exception", exc_info=err)
         return jsonify({"error": "Internal server error"}), 500
+
+    @app.after_request
+    def log_response_details(response):
+        try:
+            body_len = len(response.get_data() or b"")
+        except Exception:
+            body_len = None
+        logger.info(
+            "Response: path=%s status=%s content_length=%s body_len=%s",
+            getattr(request, "path", None),
+            response.status_code,
+            response.content_length,
+            body_len,
+        )
+        return response
 
     return app
