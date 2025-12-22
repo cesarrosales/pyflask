@@ -1,8 +1,10 @@
+import logging
 import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import NullPool
 
+logger = logging.getLogger(__name__)
 DATABASE_URL = os.getenv("DATABASE_URL")
 
 engine = None
@@ -16,3 +18,5 @@ if DATABASE_URL:
         autocommit=False,
         future=True,
     )
+else:
+    logger.warning("DATABASE_URL is not configured; database connections are disabled.")
