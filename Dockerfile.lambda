@@ -19,4 +19,4 @@ COPY --from=public.ecr.aws/awsguru/aws-lambda-adapter:0.8.4 /lambda-adapter /opt
 
 EXPOSE 8080
 
-CMD ["gunicorn", "-b", "0.0.0.0:8080", "--preload", "--workers", "1", "--threads", "4", "app.wsgi:app"]
+CMD ["gunicorn", "-b", "0.0.0.0:8080", "--workers", "1", "--timeout", "90", "--log-level", "debug", "app.wsgi:app"]

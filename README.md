@@ -15,7 +15,7 @@ pip install -r requirements.txt
 ```sh
 # running on 5001 for docker
 docker build -t pyflask .  
-pyflask % docker run --rm -p 5001:5000 --env-file .env.docker.lcl pyflask
+docker run --rm -p 5001:5000 --env-file .env.docker.lcl pyflask
 ```
 
 ### Deploy to AWS Lambda from Local (or use GitHub Action)
