@@ -45,7 +45,7 @@ aws lambda update-function-code \
 aws lambda update-function-configuration \
   --function-name pyflask \
   --region "$AWS_REGION" \
-  --environment "Variables={AWS_LWA_ASYNC_INIT=true,AWS_LWA_PORT=8080,AWS_LWA_READINESS_CHECK_PATH=/health,AWS_LWA_INVOKE_MODE=response_stream}"
+  --environment "Variables={AWS_LWA_ASYNC_INIT=true,AWS_LWA_PORT=8080,AWS_LWA_READINESS_CHECK_PATH=/health,AWS_LWA_INVOKE_MODE=buffered}"
 ```
 
 ### Monitor AWS Lambda logs
@@ -57,3 +57,4 @@ aws logs tail /aws/lambda/pyflask --follow
 
 - Endpoints use Auth0 provider
 - If using VS Code, select the `.venv` interpreter 
+- `AWS_LWA_INVOKE_MODE` should be `buffered` instead of `response_stream` when not using API Gateway
